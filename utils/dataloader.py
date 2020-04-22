@@ -1,14 +1,16 @@
 from torch.utils import data
 from scipy.ndimage.morphology import generate_binary_structure, iterate_structure
-from scipy.ndimage import binary_dilation
+from scipy.ndimage import binary_dilation, grey_dilation
+from sklearn.linear_model import LinearRegression
+from scipy.stats import binned_statistic_2d
+import numpy as np
+import scipy as sp
 
 
 class d01_Dataset(data.Dataset):
     # On the fly freqs generation for training. This version is repurposed for MDN
     # This method randomizes the sigma for auxiliary variables, perturbes the variables, and returns sigma as an input
-    def __init__(self, freqs,deg,order,numax,teff,fe_h,mass,age,acoustic_cutoff,inertia,init_helium, init_metallicity,alpha, overshoot, diffusion, undershoot,radii, luminosity, 
-                 perturb_freqs=False, perturb_teff=False, perturb_numax=False, 
-                 perturb_fe_h=False, include_quad=False, stochastic_sampling=False):
+    def __init__(self, freqs,deg,order,numax,teff,fe_h,mass,age,acoustic_cutoff,inertia,init_helium, init_metallicity,alpha, overshoot, diffusion, undershoot,radii, luminosity):
         self.freqs = freqs
         self.order =order
         self.deg = deg
@@ -27,13 +29,13 @@ class d01_Dataset(data.Dataset):
         self.mass = mass
         self.acoustic_cutoff = acoustic_cutoff
         self.inertia = inertia
-        self.stochastic_sampling = stochastic_sampling
 
-        self.perturb_freqs = perturb_freqs
-        self.perturb_numax = perturb_numax
-        self.perturb_teff = perturb_teff
-        self.perturb_fe_h = perturb_fe_h
-        self.include_quad = include_quad
+        self.stochastic_sampling = True
+        self.perturb_freqs = True
+        self.perturb_numax = True
+        self.perturb_teff = True
+        self.perturb_fe_h = True
+        self.include_quad = True
 
     def __len__(self):
         'Total number of samples'
@@ -268,6 +270,7 @@ class d01_Dataset(data.Dataset):
             nu_extended = np.concatenate([nu,nu,nu])
             nu_extended = nu_extended[(reduced_freqs_extended <=delta_nu)&(reduced_freqs_extended >= -delta_nu)]
             reduced_freqs_extended = reduced_freqs_extended[(reduced_freqs_extended <= delta_nu)&(reduced_freqs_extended >= -delta_nu)]
+            #img, xedge, yedge, binnumber = binned_statistic_2d(reduced_freqs_extended, nu_extended, None, 'count', bins=[binx,biny])
             try:                
                 img, xedge, yedge, binnumber = binned_statistic_2d(reduced_freqs_extended, nu_extended, None, 'count', bins=[binx,biny])
             except:
