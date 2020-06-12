@@ -1,12 +1,12 @@
 # deep-sub
-Asteroseismic inference of subgiant star fundamental parameters using deep learning. This algorithm, as described by Hon et al. (in prep.), is a convolutional mixture density network that uses oscillation mode frequencies, spectroscopic measurements, and global asteroseismic parameters to estimate a 10D distribution comprising the age, mass, radius, luminosity, initial helium abundance, initial metal abundance, diffusion multiplier, overshooting coefficient, and undershooting coefficient of a subgiant star. 
+Asteroseismic inference of subgiant star fundamental parameters using deep learning. This algorithm, as described by Hon et al. (submitted), is a convolutional mixture density network that uses oscillation mode frequencies, spectroscopic measurements, and global asteroseismic parameters to estimate a 10D distribution comprising the age, mass, radius, luminosity, initial helium abundance, initial metal abundance, diffusion multiplier, overshooting coefficient, and undershooting coefficient of a subgiant star. 
 
 
 ![alt text](https://github.com/mtyhon/deep-sub/raw/master/sample/contour_gemma.png "Gemma Age and Mass Estimated Distribution")
 
 
 
-The default trained network provided in this repo was trained using MESA r12115 stellar models, and can be readily used to subgiant star observations of near 1-year length.
+The default trained network provided in this repo was trained using MESA r12778 stellar models, and can be readily used to subgiant star observations of near 1-year length.
 
 Future work will see this network extended to shorter time series, where detected oscillation modes are more sparse.
 
