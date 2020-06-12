@@ -10,6 +10,12 @@ The default trained network provided in this repo was trained using MESA r12778 
 
 Future work will see this network extended to shorter time series, where detected oscillation modes are more sparse.
 
+If you are interested in the specific MDN parameters for Gemma, Scully, Boogie, and HR 7322 from the paper, please see the `paper_mdn_params` folder.
+
+
+Running the script
+===
+
 Required libraries:
 ---
 
@@ -17,11 +23,6 @@ Required libraries:
 * scipy
 * scikit-learn
 * torch (>= 0.4.0)
-
-
-Running the script
-===
-
 
 For parameter estimation, download the folder and run inference.py. The script accepts the following arguments:
 
